@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     SQLiteDatabase theDatabase;
     private EditText searchEditText;
     private String app_id = "d0ea21e0", app_key = "551ca2a90e34d9d00522b6af20718851";
-    private List<Recipe> recipes = new ArrayList<>();
+    private ArrayList<Recipe> recipes = new ArrayList<>();
 
     private String jsonUrl = " https://api.edamam.com/api/recipes/v2?type=public&q=";
 
@@ -82,22 +82,14 @@ public class MainActivity extends AppCompatActivity {
 
     RecipeJsonAdapter myAdapter;
 
-    //public static boolean isTablet;
-    //public static FragmentManager fragmentManager;
-    //DetailsFragment tFragment = new DetailsFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.recipe_activity_search);
-        //isTablet = findViewById(R.id.frameLayout) != null;
 
-
-        //attach listview to adapter
         ListView myList = findViewById(R.id.searchResult);
-        //ListAdapter myAdapter = new Adapter();
-        //myList.setAdapter(myAdapter);
-        //myList.setAdapter(myAdapter = new RecipeJsonAdapter(context, data));
+
         EditText searchEditText = findViewById(R.id.searchEditTxt);
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener( click -> {
@@ -106,16 +98,31 @@ public class MainActivity extends AppCompatActivity {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final ArrayList<Recipe> data = apiIn.getJsonData(jsonUrl + inputText + "&app_id=" + app_id + "&app_key=" + app_key);
+                    recipes = apiIn.getJsonData(jsonUrl + inputText + "&app_id=" + app_id + "&app_key=" + app_key);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            myList.setAdapter(myAdapter = new RecipeJsonAdapter(MainActivity.this,data));
+                            myList.setAdapter(myAdapter = new RecipeJsonAdapter(MainActivity.this,recipes));
                         }
                     });
                 }
             }).start();
         });
+
+            myList.setOnItemClickListener((adapterView, view, position, id) -> {
+
+            Bundle bundle=new Bundle();
+            String ingredient=recipes.get(position).ingredient;
+            String title = recipes.get(position).title;
+            String url = recipes.get(position).url;
+            bundle.putString("ingredient",ingredient);
+            bundle.putString("title",title);
+            bundle.putString("url",url);
+            Intent intent=new Intent(MainActivity.this,EmptyActivity.class);
+            intent.putExtra("FavouriteRecipe",bundle);
+            startActivity(intent);
+
+            });
     }
 
     MyOpenHelper myOpener = new MyOpenHelper( this );
@@ -207,22 +214,9 @@ public class MainActivity extends AppCompatActivity {
 
 
             Button likeButton = convertView.findViewById(R.id.favButton);
-            likeButton.setOnClickListener(view -> {
-                savetoDatabase(position);
-
-                DetailsFragment fragment = new DetailsFragment();
-                Bundle bundle = new Bundle();
-                String ingredient = myAdapter.ingredientData;
-                String title = myAdapter.titleData;
-                String url = myAdapter.urlData;
-                bundle.putString("ingredient", ingredient);
-                bundle.putString("title", title);
-                bundle.putString("url", url);
-                Intent intent = new Intent(MainActivity.this, EmptyActivity.class);
-                intent.putExtra("FavouriteRecipe", bundle);
-
-            });
-            return convertView;}
+            likeButton.setOnClickListener(view -> savetoDatabase(position));
+            return convertView;
+        }
 
 
         public void savetoDatabase(int position){
@@ -230,26 +224,20 @@ public class MainActivity extends AppCompatActivity {
 
             //myOpener = new MyOpenHelper( this );
             theDatabase = myOpener.getWritableDatabase();
-            Cursor results = theDatabase.rawQuery( "Select * from " + MyOpenHelper.TABLE_NAME + ";", null );
-            int idIndex = results.getColumnIndex( MyOpenHelper.KEY_ID );
-            int ingredientIndex = results.getColumnIndex( MyOpenHelper.COL_ingredient);
-            int titleIndex = results.getColumnIndex( MyOpenHelper.COL_title);
-            int urlIndex = results.getColumnIndex(MyOpenHelper.COL_url);
 
-            //cursor is pointing to row -1
-            while( results.moveToNext() ) //returns false if no more data
-            { //pointing to row 2
-                int id = results.getInt(idIndex);
-                String ingredient = results.getString( ingredientIndex );
-                String title = results.getString( titleIndex );
-                String url = results.getString( urlIndex );
-                //boolean isFavorite = results.getInt(sOrRIndex)==1;
+            ContentValues newRow = new ContentValues();
 
-                //add to arrayList:
-                recipes.add( new Recipe( ingredient,title, url,id ));
+            newRow.put( MyOpenHelper.COL_ingredient , ingredientData );
+            newRow.put(MyOpenHelper.COL_title, titleData);
+            newRow.put(MyOpenHelper.COL_url,urlData);
+
+            //now that columns are full, you insert:
+            theDatabase.insert( MyOpenHelper.TABLE_NAME, null, newRow );
+            //theDatabase.close();
+
             }
         };
-        }
+
         /**
          * inner class to hold the view of detailed searched result
          */

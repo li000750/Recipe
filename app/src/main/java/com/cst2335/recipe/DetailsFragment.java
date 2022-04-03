@@ -14,7 +14,7 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.recipe_activity_favourite_list,container, false);
+        View view = inflater.inflate(R.layout.recipe_fragment,container, false);
         TextView ingredient = view.findViewById(R.id.ingredient2);
         TextView title = view.findViewById(R.id.title2);
         TextView url = view.findViewById(R.id.url2);

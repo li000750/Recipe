@@ -5,9 +5,10 @@
       <map>
         <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/empty_activity.xml" value="0.184375" />
-        <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/recipe_activity_favourite_list.xml" value="0.1" />
+        <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/recipe_activity_favourite_list.xml" value="0.25" />
         <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/recipe_activity_listview_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/recipe_activity_search.xml" value="0.184375" />
+        <entry key="..\:/Users/cathy/AndroidStudioProjects/Recipe/app/src/main/res/layout/recipe_fragment.xml" value="0.30572916666666666" />
       </map>
     </option>
   </component>
