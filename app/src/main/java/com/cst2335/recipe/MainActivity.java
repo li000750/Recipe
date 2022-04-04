@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "RecipeSearchActivity";//print log
     //MyOpenHelper myOpener;
-    SQLiteDatabase theDatabase;
+
     private EditText searchEditText;
     private String app_id = "d0ea21e0", app_key = "551ca2a90e34d9d00522b6af20718851";
     private ArrayList<Recipe> recipes = new ArrayList<>();
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
-    MyOpenHelper myOpener = new MyOpenHelper( this );
+    //MyOpenHelper myOpener = new MyOpenHelper( this );
 
     public class RecipeJsonAdapter extends BaseAdapter {
 
@@ -209,33 +209,17 @@ public class MainActivity extends AppCompatActivity {
             //String calString = Double.toString(titleData);
             //String fatString = Double.toString(urlData);
             viewHolder.ingredient.setText("Ingredient: " + ingredientData);
-            viewHolder.title.setText("Title: " + urlData);
-            viewHolder.url.setText("URL: " + titleData);
+            viewHolder.title.setText("Title: " + titleData);
+            viewHolder.url.setText("URL: " + urlData);
 
 
-            Button likeButton = convertView.findViewById(R.id.favButton);
-            likeButton.setOnClickListener(view -> savetoDatabase(position));
+            //Button likeButton = convertView.findViewById(R.id.favButton);
+            //likeButton.setOnClickListener(view -> savetoDatabase(position));
             return convertView;
         }
 
 
-        public void savetoDatabase(int position){
-            Log.d(TAG, "Writing to Database");
 
-            //myOpener = new MyOpenHelper( this );
-            theDatabase = myOpener.getWritableDatabase();
-
-            ContentValues newRow = new ContentValues();
-
-            newRow.put( MyOpenHelper.COL_ingredient , ingredientData );
-            newRow.put(MyOpenHelper.COL_title, titleData);
-            newRow.put(MyOpenHelper.COL_url,urlData);
-
-            //now that columns are full, you insert:
-            theDatabase.insert( MyOpenHelper.TABLE_NAME, null, newRow );
-            //theDatabase.close();
-
-            }
         };
 
         /**

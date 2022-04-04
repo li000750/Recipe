@@ -16,7 +16,7 @@ public class EmptyActivity extends AppCompatActivity {
         //go to fragment
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
         ft.setReorderingAllowed(true);
-        ft.replace(R.id.flbox1,fragment);
+        ft.replace(R.id.frameLayout,fragment);
         ft.commit();
     }
 }

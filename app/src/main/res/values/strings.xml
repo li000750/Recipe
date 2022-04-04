@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Recipe</string>
+    <string name="title">Title:</string>
+    <string name="author">Author:</string>
+    <string name="version">Version Number</string>
+    <string name="btn_search">search</string>
+    <string name="search_hint">Enter the name of the food</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string name="author_full">Author: Qin Li / Jin Zhang / Meiping Chen </string>
+    <string name="instruction">Instructions: You can search for the ingredients and  URL of a food. You can add it to your favourite list. On your list, you can retrieve the ingredient information of a selected recipe. You can also delete an item on your favourite list from the details page.
+ </string>
+    <string name="dialogboxTitle">Recipe Database</string>
+    <string name="ok">OK</string>
+
 </resources>
