@@ -1,18 +1,26 @@
 package com.cst2335.recipe;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.FragmentManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,7 +28,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -107,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                     });
                 }
             }).start();
+
         });
 
             myList.setOnItemClickListener((adapterView, view, position, id) -> {
@@ -123,6 +135,79 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
 
             });
+
+        Toolbar recipeToolbar = (Toolbar) findViewById(R.id.recipe_toolbar);
+        setSupportActionBar(recipeToolbar);
+
+//For NavigationDrawer:
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, recipeToolbar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    /**
+     * multiple menu items for switching
+     *
+     * @param item Menuitem
+     * @return booolean
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        Toast.makeText(this, "Selected Item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        switch (item.getItemId()) {
+            case R.id.help:
+                android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle(getString(R.string.dialogboxTitle));
+                alertDialog.setMessage(getString(R.string.author_full) + "\n" +
+                        getString(R.string.version) + "\n" + getString(R.string.instruction));
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.ok),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+       String message = null;
+
+        switch(item.getItemId())
+        {
+            case R.id.title:
+                message = "Final Project：Recipe";
+                break;
+            case R.id.author:
+                message = "Qin Li / Jin Zhang / Meiping Chen";
+                break;
+            case R.id.version:
+                message = "Version Number: 1";
+                break;
+        }
+
+        if ( message != null ) {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        }
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return false;
     }
 
     //MyOpenHelper myOpener = new MyOpenHelper( this );
