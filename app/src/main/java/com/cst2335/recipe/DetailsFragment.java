@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 public class DetailsFragment extends Fragment {
     private Bundle bundle;
     SQLiteDatabase theDatabase;
-    MyOpenHelper myOpener = new MyOpenHelper(DetailsFragment.this);
+    //MyOpenHelper myOpener = new MyOpenHelper(DetailsFragment.this);
 
 
     @Override
@@ -34,13 +34,13 @@ public class DetailsFragment extends Fragment {
         String title1 = bundle.getString("title");
         String url1 = bundle.getString("url");
         //locate message, id
-        ingredient.setText(ingredient1);
-        title.setText(title1);
-        url.setText(url1);
+        ingredient.setText("Ingredient: "+ingredient1);
+        title.setText("Title: "+title1);
+        url.setText("URL: "+url1);
 
         return view;
     }
-
+/*
     public void onCheckboxClicked(View view) {
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -48,7 +48,7 @@ public class DetailsFragment extends Fragment {
         switch(view.getId()) {
             case R.id.checkBox2:
                 if (checked)
-                saveToDatabase();
+                //saveToDatabase();
 
         else
                 break;
@@ -73,4 +73,6 @@ public class DetailsFragment extends Fragment {
         //theDatabase.close();
 
     }
+
+ */
 }

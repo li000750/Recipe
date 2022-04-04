@@ -11,43 +11,45 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <ListView
             android:id="@+id/searchResult"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="341dp"
             android:layout_above="@id/btn_search"
-            android:gravity="right"
             android:layout_marginTop="150dp"
-            >
-        </ListView>
+            android:gravity="right" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="78dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/searchEditTxt"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/btn_search" />
+                android:layout_toLeftOf="@id/btn_search"
+                android:minWidth="32dp"
+                android:minHeight="48dp"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <Button
                 android:id="@+id/btn_search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="italic|bold"
-                android:text="Search" />
+                android:text="Search"
+                android:textStyle="italic|bold" />
 
         </LinearLayout>
     </LinearLayout>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
-        android:layout_width="161dp"
-        android:layout_height="604dp"
-        tools:openDrawer="start"
-        tools:ignore="MissingConstraints">
+        android:layout_width="166dp"
+        android:layout_height="204dp"
+        tools:ignore="MissingConstraints"
+        tools:openDrawer="start">
 
         <!-- THIS IS WHAT IS VISIBLE ON SCREEN:-->
 
@@ -56,8 +58,8 @@
             android:id="@+id/nav_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
             android:layout_gravity="start"
+            android:layout_marginTop="60dp"
             android:fitsSystemWindows="true"
             app:menu="@menu/drawer_menu" />
 

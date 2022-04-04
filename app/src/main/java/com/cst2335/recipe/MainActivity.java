@@ -44,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private static final String TAG = "RecipeSearchActivity";//print log
     //MyOpenHelper myOpener;
@@ -127,16 +127,15 @@ public class MainActivity extends AppCompatActivity {
             String ingredient=recipes.get(position).ingredient;
             String title = recipes.get(position).title;
             String url = recipes.get(position).url;
-            bundle.putString("ingredient",ingredient);
+            bundle.putString("Ingredient",ingredient);
             bundle.putString("title",title);
             bundle.putString("url",url);
             Intent intent=new Intent(MainActivity.this,EmptyActivity.class);
             intent.putExtra("FavouriteRecipe",bundle);
             startActivity(intent);
-
             });
 
-        Toolbar recipeToolbar = (Toolbar) findViewById(R.id.recipe_toolbar);
+        Toolbar recipeToolbar =  findViewById(R.id.recipe_toolbar);
         setSupportActionBar(recipeToolbar);
 
 //For NavigationDrawer:
@@ -185,10 +184,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
        String message = null;
-
         switch(item.getItemId())
         {
             case R.id.title:
@@ -201,7 +198,6 @@ public class MainActivity extends AppCompatActivity {
                 message = "Version Number: 1";
                 break;
         }
-
         if ( message != null ) {
             Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
